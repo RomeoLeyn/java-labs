@@ -43,36 +43,15 @@ public class Apartment {
         return this.street;
     }
 
-    public void printCountRoom(int room) {
-        if (this.countRoom == room) {
-            PrintStream var10000 = System.out;
-            int var10001 = this.getId();
-            var10000.println("id = " + var10001 + "\nNumber = " + this.getNumber() + "\nArea = " + this.getArea() + "\nFloor = " + this.getFloor() + "\nCount room = " + this.getCountRoom() + "\nStreet = " + this.getStreet());
-        } else {
-            System.out.println("Nothing found");
-        }
-
-    }
-
-    public void printCountRoomAndFloor(int floor) {
-        if (this.floor == floor) {
-            PrintStream var10000 = System.out;
-            int var10001 = this.getId();
-            var10000.println("id = " + var10001 + "\nNumber = " + this.getNumber() + "\nArea = " + this.getArea() + "\nFloor = " + this.getFloor() + "\nCount room = " + this.getCountRoom() + "\nStreet = " + this.getStreet());
-        } else {
-            System.out.println("Nothing found");
-        }
-
-    }
-
-    public void printArea(int area) {
-        if (this.area > area) {
-            PrintStream var10000 = System.out;
-            int var10001 = this.getId();
-            var10000.println("id = " + var10001 + "\nNumber = " + this.getNumber() + "\nArea = " + this.getArea() + "\nFloor = " + this.getFloor() + "\nCount room = " + this.getCountRoom() + "\nStreet = " + this.getStreet());
-        } else {
-            System.out.println("Nothing found");
-        }
-
+    @Override
+    public String toString() {
+        return "Apartment{" +
+                "id=" + id +
+                ", number=" + number +
+                ", area=" + area +
+                ", floor=" + floor +
+                ", countRoom=" + countRoom +
+                ", street='" + street + '\'' +
+                '}';
     }
 }
