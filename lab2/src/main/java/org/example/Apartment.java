@@ -1,7 +1,4 @@
 package org.example;
-
-import java.io.PrintStream;
-
 public class Apartment {
     private int id;
     private int number;
@@ -42,6 +39,7 @@ public class Apartment {
     public String getStreet() {
         return this.street;
     }
+
 
     @Override
     public String toString() {
