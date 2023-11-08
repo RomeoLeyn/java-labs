@@ -1,7 +1,7 @@
 package org.example;
 
 public class Apartment {
-    private int id;
+    private long id;
     private int number;
     private int area;
     private int floor;
@@ -13,7 +13,6 @@ public class Apartment {
     }
 
     public Apartment( int number, int area, int floor, int countRoom, String street) {
-//        this.id = id;
         this.number = number;
         this.area = area;
         this.floor = floor;
@@ -21,7 +20,7 @@ public class Apartment {
         this.street = street;
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
@@ -45,7 +44,7 @@ public class Apartment {
         return this.street;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -71,12 +70,12 @@ public class Apartment {
 
     @Override
     public String toString() {
-        return "\t Apartment" + '\n' +
-                "id=" + id + '\n' +
-                "number=" + number + '\n' +
-                "area=" + area + '\n' +
-                "floor=" + floor + '\n' +
-                "countRoom=" + countRoom + '\n' +
-                "street='" + street + '\'' + '\n';
+        return "\t Apartment " + '\n' +
+                "id = " + id + '\n' +
+                "number = " + number + '\n' +
+                "area = " + area + '\n' +
+                "floor = " + floor + '\n' +
+                "countRoom = " + countRoom + '\n' +
+                "street = " + street + '\'' + '\n';
     }
 }

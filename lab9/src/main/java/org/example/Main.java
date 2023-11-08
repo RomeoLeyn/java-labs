@@ -2,6 +2,7 @@ package org.example;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -83,7 +84,7 @@ public class Main {
                             System.out.print("Enter the apartment area = ");
                             int area = scanner.nextInt();
 
-                            System.out.print("Enter the apartment floor =");
+                            System.out.print("Enter the apartment floor = ");
                             int floor = scanner.nextInt();
 
                             System.out.print("Enter the number of rooms in the apartment = ");
@@ -94,7 +95,14 @@ public class Main {
 
                             Apartment apartment = new Apartment(number, area, floor, countRoom, street);
 
-                            apartmentDAO.insert(apartment);
+                            int countInsertRows = apartmentDAO.insert(apartment);
+
+                            if (countInsertRows == 1) {
+                                System.out.println("Rows insert - " + countInsertRows + '\n');
+                            } else {
+                                System.err.println("Unable insert");
+                            }
+
 
                             break;
                         case 7:
@@ -116,13 +124,26 @@ public class Main {
 
                             Apartment apartmentToDelete = new Apartment(numberToDelete, areaToDelete, floorToDelete, countRoomToDelete, streetToDelete);
 
-                            apartmentDAO.deleteApartment(apartmentToDelete);
+                            int countDeleteRows = apartmentDAO.delete(apartmentToDelete);
+
+                            if (countDeleteRows == 1) {
+                                System.out.println("Rows delete - " + countDeleteRows + '\n');
+                            } else {
+                                System.err.println("Failed to delete data");
+                            }
 
                             break;
 
                         case 8:
-                            System.out.print("Enter the id to delete");
-                            apartmentDAO.deleteApartmentById(scanner.nextInt());
+                            System.out.print("Enter the id to delete = ");
+
+                            int countDeleteRowsById = apartmentDAO.deleteById(scanner.nextInt());
+
+                            if (countDeleteRowsById == 1) {
+                                System.out.println("Rows delete - " + countDeleteRowsById + '\n');
+                            } else {
+                                System.err.println("Failed to delete data");
+                            }
 
                             break;
 
@@ -149,7 +170,13 @@ public class Main {
                             Apartment apartmentToUpdate = new Apartment(numberUpdate, areaUpdate, floorUpdate, countRoomUpdate, streetUpdate);
                             apartmentToUpdate.setId(idToUpdate);
 
-                            apartmentDAO.updateApartmentByNumber(apartmentToUpdate);
+                            int countRowsUpdate = apartmentDAO.update(apartmentToUpdate);
+
+                            if (countRowsUpdate == 1) {
+                                System.out.println("Rows update - " + countRowsUpdate + '\n');
+                            } else {
+                                System.err.println("Unable to update");
+                            }
 
                             break;
                         case 0:
@@ -161,7 +188,7 @@ public class Main {
             }
         } catch (Exception ex) {
             System.out.println("Connection failed...");
-            System.out.println(ex);
+            System.out.println(Arrays.toString(ex.getStackTrace()));
         }
     }
 }

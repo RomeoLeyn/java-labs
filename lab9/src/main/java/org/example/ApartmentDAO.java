@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ApartmentDAO {
@@ -15,9 +16,11 @@ public class ApartmentDAO {
         this.connection = connection;
     }
 
-    public void insert(Apartment apartment) {
+    public int insert(Apartment apartment) {
 
-        String insertApartment = "INSERT INTO APARTMENT (number, area, floor, countRoom, street) VALUES (?, ?, ?, ?, ?);";
+        int insertRowsCount = 0;
+
+        String insertApartment = "INSERT INTO apartment (number, area, floor, countRoom, street) VALUES (?, ?, ?, ?, ?);";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertApartment)) {
 
@@ -27,13 +30,14 @@ public class ApartmentDAO {
             preparedStatement.setInt(4, apartment.getCountRoom());
             preparedStatement.setString(5, apartment.getStreet());
 
-            preparedStatement.executeUpdate();
+            insertRowsCount = preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
-    }
 
+        return insertRowsCount;
+    }
 
     public List<Apartment> select() {
 
@@ -60,12 +64,11 @@ public class ApartmentDAO {
             }
 
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
 
         return getAllApartments;
     }
-
 
     public List<Apartment> filterByCountRoom(int countRoom) {
 
@@ -83,7 +86,7 @@ public class ApartmentDAO {
 
                 Apartment apartment = new Apartment();
 
-                apartment.setId(resultSet.getInt("id"));
+                apartment.setId(resultSet.getLong("id"));
                 apartment.setNumber(resultSet.getInt("number"));
                 apartment.setArea(resultSet.getInt("area"));
                 apartment.setFloor(resultSet.getInt("floor"));
@@ -94,7 +97,7 @@ public class ApartmentDAO {
             }
 
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
 
         return apartmentList;
@@ -126,7 +129,7 @@ public class ApartmentDAO {
             }
 
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
 
         return list;
@@ -146,7 +149,7 @@ public class ApartmentDAO {
 
                 Apartment apartment = new Apartment();
 
-                apartment.setId(resultSet.getInt("id"));
+                apartment.setId(resultSet.getLong("id"));
                 apartment.setNumber(resultSet.getInt("number"));
                 apartment.setArea(resultSet.getInt("area"));
                 apartment.setFloor(resultSet.getInt("floor"));
@@ -157,30 +160,34 @@ public class ApartmentDAO {
             }
 
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
         return apartmentList;
     }
 
-    public void updateApartmentByNumber(Apartment apartment) {
+    public int update(Apartment apartment) {
 
-        String updateApartment = "UPDATE apartment SET number = ?, area = ?, floor = ?, countroom = ?, street = ? WHERE id = ?;";
+        int updateRowsCount = 0;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateApartment)) {
+        String update = "UPDATE apartment SET number = ?, area = ?, floor = ?, countroom = ?, street = ? WHERE id = ?;";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
 
             preparedStatement.setInt(1, apartment.getNumber());
             preparedStatement.setInt(2, apartment.getArea());
             preparedStatement.setInt(3, apartment.getFloor());
             preparedStatement.setInt(4, apartment.getCountRoom());
             preparedStatement.setString(5, apartment.getStreet());
-            preparedStatement.setInt(6, apartment.getId());
+            preparedStatement.setLong(6, apartment.getId());
 
-            System.out.println("Update successful!");
 
-            preparedStatement.executeUpdate();
+            updateRowsCount = preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
+
+        return updateRowsCount;
     }
 
     public Apartment findById(int id) {
@@ -192,7 +199,7 @@ public class ApartmentDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                apartment.setId(resultSet.getInt("id"));
+                apartment.setId(resultSet.getLong("id"));
                 apartment.setNumber(resultSet.getInt("number"));
                 apartment.setArea(resultSet.getInt("area"));
                 apartment.setFloor(resultSet.getInt("floor"));
@@ -202,13 +209,15 @@ public class ApartmentDAO {
 
 
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
 
         return apartment;
     }
 
-    public void deleteApartment(Apartment apartment) {
+    public int delete(Apartment apartment) {
+
+        int deleteRowsCount = 0;
 
         String delete = "DELETE FROM apartment WHERE number = ? AND area = ? AND floor = ? AND countroom = ? AND street = ?;";
 
@@ -220,28 +229,33 @@ public class ApartmentDAO {
             preparedStatement.setInt(4, apartment.getCountRoom());
             preparedStatement.setString(5, apartment.getStreet());
 
-            preparedStatement.executeUpdate();
+            deleteRowsCount = preparedStatement.executeUpdate();
 
-            System.out.println("Delete successful");
 
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
+
+        return deleteRowsCount;
     }
 
-    public void deleteApartmentById(int id) {
+    public int deleteById(int id) {
+
+        int deleteRowsCount = 0;
 
         String deleteById = "DELETE FROM apartment WHERE id = ?;";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(deleteById)) {
 
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+            preparedStatement.setLong(1, id);
 
-            System.out.println("Delete by id successful");
+            deleteRowsCount = preparedStatement.executeUpdate();
+
 
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
+
+        return deleteRowsCount;
     }
 }
