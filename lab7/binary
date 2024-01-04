@@ -1,0 +1,36 @@
+	 ApartmentSet[
+id = 1
+number = 101
+area = 50.0
+floor = 5
+countRoom = 5
+street = str
+, 
+id = 2
+number = 202
+area = 65.0
+floor = 6
+countRoom = 6
+street = str1
+, 
+id = 3
+number = 303
+area = 55.0
+floor = 3
+countRoom = 3
+street = str2
+, 
+id = 4
+number = 404
+area = 70.0
+floor = 3
+countRoom = 4
+street = str3
+, 
+id = 5
+number = 505
+area = 58.0
+floor = 3
+countRoom = 3
+street = str4
+]
